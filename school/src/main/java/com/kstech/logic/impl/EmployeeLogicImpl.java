@@ -32,7 +32,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	@Override
 	public EmployeeVO getEmployeeById(Long id) {
 		Employee employee=new Employee();
-		employee.setEmployee_id(id);
+		employee.setEmployeeId(id);
 		Optional<Employee> employeeRet =employeeDao.findById(id);
 		EmployeeVO employeeVO= new EmployeeVO();
 		BeanUtils.copyProperties(employeeRet, employeeVO);

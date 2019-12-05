@@ -2,6 +2,10 @@ package com.kstech.app.exception;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,39 +21,58 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.kstech.model.ErrorResponse;
 
-@SuppressWarnings({"unchecked","rawtypes"})
-@ControllerAdvice
-public class CustomExceptionHandler extends ResponseEntityExceptionHandler 
-{
-	
+@SuppressWarnings({ "unchecked", "rawtypes" })
+@ControllerAdvice()
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+
 	protected final Log logger = LogFactory.getLog(getClass());
-	
-	
-    @ExceptionHandler(Exception.class)
-    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        List<String> details = new ArrayList<>();
-        
-        
-        details.add(ex.getLocalizedMessage());
-        ErrorResponse error = new ErrorResponse("Server Error", details);
-        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
- 
-    @ExceptionHandler(RecordNotFoundException.class)
-    public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest request) {
-        List<String> details = new ArrayList<>();
-        details.add(ex.getLocalizedMessage());
-        ErrorResponse error = new ErrorResponse("Record Not Found", details);
-        return new ResponseEntity(error, HttpStatus.NOT_FOUND);
-    }
- 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        List<String> details = new ArrayList<>();
-        for(ObjectError error : ex.getBindingResult().getAllErrors()) {
-            details.add(error.getDefaultMessage());
-        }
-        ErrorResponse error = new ErrorResponse("Validation/Validations Failed", details);
-        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
-    }
+
+	@ExceptionHandler(Exception.class)
+	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+		ex.printStackTrace();
+		List<String> details = new ArrayList<>();
+		Throwable exCause = null;
+		if (ex.getCause() != null) {
+			exCause = ex.getCause().getCause();
+		}
+		if (exCause != null && exCause instanceof ConstraintViolationException) {
+			return handleConstraintViolationException((ConstraintViolationException) exCause);
+		}
+		details.add(ex.getLocalizedMessage());
+		ErrorResponse error = new ErrorResponse("Server Error", details);
+		return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	private ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex) {
+		ex.printStackTrace();
+		List<String> details = new ArrayList<>();
+		Set<ConstraintViolation<?>> viols = ex.getConstraintViolations();
+		for (ConstraintViolation viol : viols) {
+			details.add(viol.getMessage());
+		}
+
+		ErrorResponse error = new ErrorResponse("Validation/Validations Failed", details);
+		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(RecordNotFoundException.class)
+	public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest request) {
+		ex.printStackTrace();
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		ErrorResponse error = new ErrorResponse("Validation/Validations Failed", details);
+		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+	}
+
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		ex.printStackTrace();
+		List<String> details = new ArrayList<>();
+		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
+			details.add(error.getDefaultMessage());
+		}
+		ErrorResponse error = new ErrorResponse("Validation/Validations Failed", details);
+		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+	}
 }

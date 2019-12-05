@@ -1,12 +1,13 @@
 package com.kstech.model;
 
-import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Employee {
@@ -16,23 +17,28 @@ public class Employee {
 	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long employee_id;
+	private Long employeeId;
+	public Long getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(Long employeeId) {
+		this.employeeId = employeeId;
+	}
+	@NotEmpty(message = "name must not be empty")
 	private String name;
 	private String fathername;
 	private String mothername;
-	private String addressid;
+	private Long addressid;
 	private String sex;
+	  @NotEmpty(message = "email must not be empty")
+	    @Email(message = "email should be a valid email")
 	private String email;
 	private Date dob;
+	  @NotEmpty(message = "mobile No. must not be empty")
 	private String mobileNo;
 	private String designation;
+	//@Column(name = "jobType")
 	private String jobType;
-	public Long getEmployee_id() {
-		return employee_id;
-	}
-	public void setEmployee_id(Long employee_id) {
-		this.employee_id = employee_id;
-	}
 	public String getName() {
 		return name;
 	}
@@ -51,10 +57,10 @@ public class Employee {
 	public void setMothername(String mothername) {
 		this.mothername = mothername;
 	}
-	public String getAddressid() {
+	public Long getAddressid() {
 		return addressid;
 	}
-	public void setAddressid(String addressid) {
+	public void setAddressid(Long addressid) {
 		this.addressid = addressid;
 	}
 	public String getSex() {
