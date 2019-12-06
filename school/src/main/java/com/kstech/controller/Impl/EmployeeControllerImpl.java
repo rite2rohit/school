@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kstech.logic.EmployeeLogic;
+import com.kstech.model.Address;
 import com.kstech.model.EmployeeVO;
 
 
@@ -30,7 +31,6 @@ public class EmployeeControllerImpl  {
 	   }
 	
 	   @RequestMapping(value = "/employees/add",method=RequestMethod.POST, produces={MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
-	   @ResponseBody
 	   public ResponseEntity<EmployeeVO> addEmployee (@RequestBody EmployeeVO employee)
 	   {
 		   
@@ -45,6 +45,15 @@ public class EmployeeControllerImpl  {
 	        
 	       return new ResponseEntity<EmployeeVO>(employee, HttpStatus.OK);
 	   }
+	   
+	   @RequestMapping(value = "/employees/address/{id}",method=RequestMethod.POST, produces={MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
+	   public ResponseEntity<Address> addEmployeeAddress (@RequestBody Address address,@PathVariable("id") Long id)
+	   {
+		   employeeLogic.addEmployeeAddress(id,address);
+	       return new ResponseEntity<Address>(address, HttpStatus.OK);
+	   }
+	   
+	   
 	
 
 }
