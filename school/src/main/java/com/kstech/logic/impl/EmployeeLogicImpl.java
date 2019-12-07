@@ -36,6 +36,7 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 		
 	}
 
+	
 	@Override
 	public EmployeeVO getEmployeeById(Long id) {
 		Employee employee=new Employee();
@@ -49,8 +50,9 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	@Override
 	public void addEmployeeAddress(Long id, Address address) {
 		Optional<Employee> employeeRet =employeeDao.findById(id);
-		address.getEmployees().add(employeeRet.get());
-		addressDao.save(address);
+		employeeRet.get().getAddress().add(address);
+		employeeDao.save(employeeRet.get());
+		
 	}
 	
 	

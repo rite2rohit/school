@@ -31,6 +31,7 @@ public class EmployeeControllerImpl  {
 	   }
 	
 	   @RequestMapping(value = "/employees/add",method=RequestMethod.POST, produces={MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
+	   @ResponseBody
 	   public ResponseEntity<EmployeeVO> addEmployee (@RequestBody EmployeeVO employee)
 	   {
 		   
@@ -39,6 +40,7 @@ public class EmployeeControllerImpl  {
 	   }
 	    
 	   @RequestMapping(value = "/employees/{id}",method=RequestMethod.GET) 
+	   @ResponseBody
 	   public ResponseEntity<EmployeeVO> getEmployeeById (@PathVariable("id") Long id)
 	   {
 	       EmployeeVO employee = employeeLogic.getEmployeeById(id);
@@ -47,6 +49,7 @@ public class EmployeeControllerImpl  {
 	   }
 	   
 	   @RequestMapping(value = "/employees/address/{id}",method=RequestMethod.POST, produces={MediaType.APPLICATION_JSON_VALUE}, consumes=MediaType.APPLICATION_JSON_VALUE)
+	   @ResponseBody
 	   public ResponseEntity<Address> addEmployeeAddress (@RequestBody Address address,@PathVariable("id") Long id)
 	   {
 		   employeeLogic.addEmployeeAddress(id,address);

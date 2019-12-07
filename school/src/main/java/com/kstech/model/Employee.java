@@ -14,12 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name="employee")
+@Table(name = "employee")
 public class Employee {
 
 	/**
@@ -27,7 +29,7 @@ public class Employee {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="employee_id")
+	@Column(name = "employee_id")
 	private Long employeeId;
 
 	public Long getEmployeeId() {
@@ -53,18 +55,35 @@ public class Employee {
 	// @Column(name = "jobType")
 	private String jobType;
 	
-	
-	
-	 @ManyToMany(fetch = FetchType.LAZY,
-	            cascade = {
-	                CascadeType.PERSIST,
-	                CascadeType.MERGE
-	            })
-	    @JoinTable(name = "employee_address",
-	    
-	            joinColumns = { @JoinColumn(name = "employee_id")  ,@JoinColumn(name="address_id")})
-	    private Set<Address> addresses = new HashSet<>();
+
+	 @OneToMany(
+		        cascade = CascadeType.ALL,
+		        orphanRemoval = true
+		    )
+	private Set<Address> address = new HashSet<>();
+
 	 
+	 public Employee() {
+		 
+	 }
+	public Employee(Long employeeId, @NotEmpty(message = "name must not be empty") String name, String fathername,
+			String mothername, String sex,
+			@NotEmpty(message = "email must not be empty") @Email(message = "email should be a valid email") String email,
+			Date dob, @NotEmpty(message = "mobile No. must not be empty") String mobileNo, String designation,
+			String jobType, Set<Address> address) {
+		super();
+		this.employeeId = employeeId;
+		this.name = name;
+		this.fathername = fathername;
+		this.mothername = mothername;
+		this.sex = sex;
+		this.email = email;
+		this.dob = dob;
+		this.mobileNo = mobileNo;
+		this.designation = designation;
+		this.jobType = jobType;
+		this.address = address;
+	}
 
 	public String getName() {
 		return name;
@@ -137,5 +156,14 @@ public class Employee {
 	public void setJobType(String jobType) {
 		this.jobType = jobType;
 	}
+
+	public Set<Address> getAddress() {
+		return address;
+	}
+
+	public void setAddress(Set<Address> address) {
+		this.address = address;
+	}
+	
 
 }

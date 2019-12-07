@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -48,6 +49,7 @@ public class Address implements Serializable {
 	@NotNull
     @Size(max = 10)
 	private String pincode;
+	
 	public Long getAddressId() {
 		return addressId;
 	}
@@ -91,19 +93,8 @@ public class Address implements Serializable {
 		this.pincode = pincode;
 	}
 	
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            },
-            mappedBy = "address")
-    private Set<Employee> employees = new HashSet<>();
-	public Set<Employee> getEmployees() {
-		return employees;
-	}
-	public void setEmployees(Set<Employee> employees) {
-		this.employees = employees;
-	}
-
+	
+	
+	
 	
 }

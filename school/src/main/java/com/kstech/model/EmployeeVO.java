@@ -1,29 +1,27 @@
 package com.kstech.model;
 
 import java.sql.Date;
+import java.util.Set;
 
 public class EmployeeVO {
 	
-	/**
-	 * 
-	 */
 	private Long employeeId;
-	public Long getEmployeeId() {
-		return employeeId;
-	}
-	public void setEmployeeId(Long employeeId) {
-		this.employeeId = employeeId;
-	}
 	private String name;
 	private String fathername;
 	private String mothername;
-	private Long addressid;
 	private String sex;
 	private String email;
 	private Date dob;
 	private String mobileNo;
 	private String designation;
 	private String jobType;
+	
+	public Long getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(Long employeeId) {
+		this.employeeId = employeeId;
+	}
 	public String getName() {
 		return name;
 	}
@@ -41,12 +39,6 @@ public class EmployeeVO {
 	}
 	public void setMothername(String mothername) {
 		this.mothername = mothername;
-	}
-	public Long getAddressid() {
-		return addressid;
-	}
-	public void setAddressid(Long addressid) {
-		this.addressid = addressid;
 	}
 	public String getSex() {
 		return sex;
@@ -84,14 +76,8 @@ public class EmployeeVO {
 	public void setJobType(String jobType) {
 		this.jobType = jobType;
 	}
-	
-    
-    
-    
-    
-    
-    
-    
+
+
 	
 
 }
