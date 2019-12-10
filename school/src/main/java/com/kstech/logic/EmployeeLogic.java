@@ -1,5 +1,7 @@
 package com.kstech.logic;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.kstech.model.Address;
@@ -19,5 +21,8 @@ public interface EmployeeLogic {
 
 
 	void addEmployeeProject(Long id, Project project);
+
+
+	List<EmployeeVO> getEmployeeByName(String name);
 
 }

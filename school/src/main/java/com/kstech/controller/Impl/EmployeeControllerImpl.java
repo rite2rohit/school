@@ -1,5 +1,7 @@
 package com.kstech.controller.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kstech.logic.EmployeeLogic;
@@ -42,7 +45,12 @@ public class EmployeeControllerImpl {
 
 		return new ResponseEntity<EmployeeVO>(employee, HttpStatus.OK);
 	}
-
+	@RequestMapping(value = "/employees", method = RequestMethod.GET)
+	public ResponseEntity<List<EmployeeVO>> getEmployeeByName(@RequestParam("name") String name) {
+		List<EmployeeVO> employees = employeeLogic.getEmployeeByName(name);
+		return new ResponseEntity<List<EmployeeVO>>(employees, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/employees/address/{id}", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SuccessResponse> addEmployeeAddress(@RequestBody Address address,
