@@ -13,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -26,6 +29,11 @@ import com.kstech.model.ErrorResponse;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @ControllerAdvice()
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	@InitBinder
+	   public void initBinder(WebDataBinder binder) {
+	       binder.initDirectFieldAccess();
+	   }
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
@@ -71,8 +79,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		List<String> details = new ArrayList<>();
-		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
-			details.add(error.getDefaultMessage());
+		if (ex.getBindingResult().hasErrors()) {
+			StringBuilder errorMessage = new StringBuilder("");
+			for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+				
+				errorMessage.append(fieldError.getField()+":- ");
+				errorMessage.append( fieldError.getDefaultMessage());
+			}
+			details.add(errorMessage.toString());
+		
 		}
 		ErrorResponse error = new ErrorResponse("Validation/Validations Failed", details);
 		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);

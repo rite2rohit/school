@@ -2,6 +2,8 @@ package com.kstech.controller.Impl;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,7 +35,7 @@ public class EmployeeControllerImpl {
 
 	@RequestMapping(value = "/employees/add", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<EmployeeVO> addEmployee(@RequestBody EmployeeVO employee) {
+	public ResponseEntity<EmployeeVO> addEmployee(@Valid @RequestBody EmployeeVO employee) {
 
 		employeeLogic.addEmployee(employee);
 		return new ResponseEntity<EmployeeVO>(employee, HttpStatus.OK);
@@ -46,14 +48,14 @@ public class EmployeeControllerImpl {
 		return new ResponseEntity<EmployeeVO>(employee, HttpStatus.OK);
 	}
 	@RequestMapping(value = "/employees", method = RequestMethod.GET)
-	public ResponseEntity<List<EmployeeVO>> getEmployeeByName(@RequestParam("name") String name) {
+	public ResponseEntity<List<EmployeeVO>> getEmployeeByName(@Valid @RequestParam("name") String name) {
 		List<EmployeeVO> employees = employeeLogic.getEmployeeByName(name);
 		return new ResponseEntity<List<EmployeeVO>>(employees, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/employees/address/{id}", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SuccessResponse> addEmployeeAddress(@RequestBody Address address,
+	public ResponseEntity<SuccessResponse> addEmployeeAddress(@Valid @RequestBody Address address,
 			@PathVariable("id") Long id) {
 		employeeLogic.addEmployeeAddress(id, address);
 		SuccessResponse successResponse = new SuccessResponse();
@@ -63,7 +65,7 @@ public class EmployeeControllerImpl {
 
 	@RequestMapping(value = "/employees/project/{id}", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SuccessResponse> addEmployeeProject(@RequestBody Project project,
+	public ResponseEntity<SuccessResponse> addEmployeeProject(@Valid @RequestBody Project project,
 			@PathVariable("id") Long id) {
 		employeeLogic.addEmployeeProject(id, project);
 		SuccessResponse successResponse = new SuccessResponse();

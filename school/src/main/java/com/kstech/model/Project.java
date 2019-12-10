@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "project")
@@ -19,7 +20,7 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "project_id")
 	private Long projectId;
-	
+	@NotBlank
 	@Column(name="project_name")
 	private String projectName;
 	

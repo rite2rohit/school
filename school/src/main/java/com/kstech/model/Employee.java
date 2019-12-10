@@ -52,24 +52,16 @@ public class Employee {
 	private String designation;
 	// @Column(name = "jobType")
 	private String jobType;
-	
 
-	 @OneToMany(
-		        cascade = CascadeType.ALL,
-		        orphanRemoval = true
-		    )
-	private Set<Address> address = new HashSet<>();
-	 
-	 @ManyToMany(cascade = { CascadeType.ALL })
-	    @JoinTable(
-	        name = "Employee_Project", 
-	        joinColumns = { @JoinColumn(name = "employee_id") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "project_id") }
-	    )
-	    Set<Project> projects = new HashSet<>();
+	@OneToMany(mappedBy="employee")
+	private Set<Address> address;
 
-	 
-	 public Set<Project> getProjects() {
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "Employee_Project", joinColumns = { @JoinColumn(name = "employee_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "project_id") })
+	Set<Project> projects = new HashSet<>();
+
+	public Set<Project> getProjects() {
 		return projects;
 	}
 
@@ -78,8 +70,9 @@ public class Employee {
 	}
 
 	public Employee() {
-		 
-	 }
+
+	}
+
 	public Employee(Long employeeId, @NotEmpty(message = "name must not be empty") String name, String fathername,
 			String mothername, String sex,
 			@NotEmpty(message = "email must not be empty") @Email(message = "email should be a valid email") String email,
@@ -178,6 +171,5 @@ public class Employee {
 	public void setAddress(Set<Address> address) {
 		this.address = address;
 	}
-	
 
 }
