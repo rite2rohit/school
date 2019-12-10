@@ -1,6 +1,7 @@
 package com.kstech.model;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public class EmployeeVO {
@@ -15,6 +16,7 @@ public class EmployeeVO {
 	private String mobileNo;
 	private String designation;
 	private String jobType;
+	private Set<Address> address = new HashSet<>();
 	
 	public Long getEmployeeId() {
 		return employeeId;
@@ -76,8 +78,14 @@ public class EmployeeVO {
 	public void setJobType(String jobType) {
 		this.jobType = jobType;
 	}
+	public Set<Address> getAddress() {
+		return address;
+	}
 
-
+	
+	public void setAddress(Set<Address> address) {
+		this.address = address;
+	}
 	
 
 }

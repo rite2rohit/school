@@ -61,9 +61,25 @@ public class Employee {
 		        orphanRemoval = true
 		    )
 	private Set<Address> address = new HashSet<>();
+	 
+	 @ManyToMany(cascade = { CascadeType.ALL })
+	    @JoinTable(
+	        name = "Employee_Project", 
+	        joinColumns = { @JoinColumn(name = "employee_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "project_id") }
+	    )
+	    Set<Project> projects = new HashSet<>();
 
 	 
-	 public Employee() {
+	 public Set<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Set<Project> projects) {
+		this.projects = projects;
+	}
+
+	public Employee() {
 		 
 	 }
 	public Employee(Long employeeId, @NotEmpty(message = "name must not be empty") String name, String fathername,
