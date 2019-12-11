@@ -1,10 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <!-- Font special for pages-->
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!--   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+<!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+  <!-- Main CSS-->
+<link rel="stylesheet" href="../css/styles.css">
+
 </head>
-<body>
-Hello
+<body >
+<div class="container">
+	
+	<div>
+			<h2>Register Employee</h2>
+			<button	onclick="document.getElementById('registrationform').style.display='block'" style="width: auto;">Register Employee</button>
+		</div>
+		<span onclick="document.getElementById('registrationform').style.display='none'" class="close" title="Close Registration">&times;</span>
+	<div id="registrationform" class="modal">
+		
+		<form  data-ng-app="myApp"
+			data-ng-controller="validateCtrl" name="empReg" novalidate>
+			<div>
+				<h1>Add Employee</h1>
+				<p>Please fill in this form to Employee .</p>
+				<hr>
+				<div>
+					<label for="name"><b>Name</b><span style="color: red">*</span></label> <input type="text"
+						placeholder="Employee Name" name="name" data-ng-model="name" required/>
+						 	<span style="color: red" data-ng-show="empReg.name.$dirty && empReg.name.$invalid">
+						 		<span data-ng-show="empReg.name.$error.required">Employee name is required.</span>
+							</span>
+				</div>
+				<div>
+					<label for="fathername"><b>Father 's name</b><span style="color: red">*</span></label> <input type="text"
+						placeholder="Father's Name" name="fathername" data-ng-model="fathername" required/>
+						 	<span style="color: red" data-ng-show="empReg.fathername.$dirty && empReg.fathername.$invalid">
+						 		<span data-ng-show="empReg.fathername.$error.required">Father's name name is required.</span>
+							</span>
+				</div>
+				<div>
+					<label for="mothername"><b>Mother's name</b><span style="color: red">*</span></label> <input type="text"
+						placeholder="Mother's Name" name="mothername" data-ng-model="mothername" required/>
+						 	<span style="color: red" data-ng-show="empReg.mothername.$dirty && empReg.mothername.$invalid">
+						 		<span data-ng-show="empReg.mothername.$error.required">Father's name name is required.</span>
+							</span>
+				</div>
+				<div>
+					<label for="mothername"><b>Mother's name</b><span style="color: red">*</span></label> <input type="text"
+						placeholder="Mother's Name" name="mothername" data-ng-model="mothername" required/>
+						 	<span style="color: red" data-ng-show="empReg.mothername.$dirty && empReg.mothername.$invalid">
+						 		<span data-ng-show="empReg.mothername.$error.required">Father's name name is required.</span>
+							</span>
+				</div>
+				<div>
+					<button type="button"
+						onclick="document.getElementById('registrationform').style.display='none'">Cancel</button>
+					<button type="submit">Add</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</div>
+	
+		 
+	
+	<script>
+		// Get the modal
+		var modal = document.getElementById('registrationform');
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+	</script>
+	<script src="../js/employeeRegistration.js"></script>
+
 </body>
 </html>
