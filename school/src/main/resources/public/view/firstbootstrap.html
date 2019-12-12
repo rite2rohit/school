@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome TO KS Technology Point</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+  <!-- Main CSS-->
+<link rel="stylesheet" href="../css/styles.css">
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  </style>
+</head>
+<body>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>Welcome to KST Point</h1>
+  <p>Resize this responsive page to see the effect!</p> 
+</div>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+ <!--  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button> -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Blog</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact Us</a>
+      </li>    
+    </ul>
+  </div>  
+</nav>
+
+<div class="container" style="margin-top:30px">
+  <div class="row">
+    <div class="col-4">
+      <h2>About Me</h2>
+      <h5>Photo of me:</h5>
+      <div class="fakeimg">Fake Image</div>
+      <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+      <h3>Some Links</h3>
+      <p>Lorem ipsum dolor sit ame.</p>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+      </ul>
+      <hr class="d-sm-none">
+    </div>
+    <div class="col-8">
+      	<div id="registrationform" >
+		<form  data-ng-app="myApp" data-ng-controller="validateCtrl" name="empReg" novalidate>
+			<div class="container">
+				<h1>Add Employee</h1>
+				<p>Please fill in this form to Employee .</p>
+				<hr>
+					<div class ="row">
+						<div class="col-3"><label for="name" ><b>Name</b><span style="color: red">*</span></label> </div>
+						<div class="col-9">
+							<input type="text" placeholder="Employee Name" name="name" data-ng-model="name" required/>
+							 	<span style="color: red" data-ng-show="empReg.emp.name.$dirty && empReg.name.$invalid">
+							 		<span data-ng-show="empReg.name.$error.required">Employee name is required.</span>
+								</span>
+						</div>
+					</div>
+				<div class ="row">
+					<div class="col-3"><label for="fathername" ><b>Father 's name</b><span style="color: red">*</span></label></div>
+					<div class="col-9"> 
+							<input type="text" placeholder="Father's Name" name="fathername" data-ng-model="fathername" required/>
+						 		<span style="color: red" data-ng-show="empReg.fathername.$dirty && empReg.fathername.$invalid">
+						 			<span data-ng-show="empReg.fathername.$error.required">Father's name is required.</span>
+							</span>
+					</div>
+				</div>
+				<div class ="row">
+					<div class="col-3"><label for="mothername" ><b>Mother's name</b><span style="color: red">*</span></label> </div>
+					<div class="col-9">
+					<input type="text"
+						placeholder="Mother's Name" name="mothername" data-ng-model="mothername" required/>
+						 	<span style="color: red" data-ng-show="empReg.mothername.$dirty && empReg.mothername.$invalid">
+						 		<span data-ng-show="empReg.mothername.$error.required">Mother's name is required.</span>
+							</span>
+							</div>
+				</div>
+				<div class ="row">
+				
+					<div class="col-3"><label for="sex"><b>Gender</b><span style="color: red">*</span></label></div> 
+					<div class="col-9">
+						<input type="radio" name="sex" data-ng-model="sex" value="male"/>Male
+						<input type="radio" name="sex" data-ng-model="sex" value="female"/>Female
+					</div>
+				</div>
+				<div class ="row">
+					<div class="col-3"><label for="email" ><b>Email</b><span style="color: red">*</span></label> </div>
+					<div class="col-9">
+					<input type="text"
+						placeholder="Email" name="email" data-ng-model="email" required/>
+						 	<span style="color: red" data-ng-show="empReg.email.$dirty && empReg.email.$invalid">
+						 		<span data-ng-show="empReg.email.$error.required">Email  is required/Invalid.</span>
+							</span>
+							</div>
+				</div>
+					<div class ="row">
+					<div class="col-3"><label for="dob" ><b>Date of Birth</b><span style="color: red">*</span></label> </div>
+					<div class="col-9">
+					<input type="text"
+						placeholder="DOB" name="dob" data-ng-model="dob" required/>
+						 	<span style="color: red" data-ng-show="empReg.dob.$dirty && empReg.dob.$invalid">
+						 		<span data-ng-show="empReg.dob.$error.required">DOB  is required/Invalid.</span>
+							</span>
+					</div>
+				</div>
+				<div class ="row">
+					<div class="col-3"><label for="designation" ><b>Designation</b><span style="color: red">*</span></label> </div>
+					<div class="col-9">
+							<select data-ng-model="designation" data-ng-options="i.des for i in designations" required="required">
+							</select>
+							<span style="color: red" data-ng-show="empReg.designation.$dirty && empReg.designation.$invalid">
+						 		<span data-ng-show="empReg.designation.$error.required">Select Any Designation.</span>
+							</span>
+							</div>
+				</div>
+				<div class ="row">
+					<div class="col-3"><label for="jobType" ><b>Job Type</b><span style="color: red">*</span></label> </div>
+					<div class="col-9">
+							<select data-ng-model="jobType" data-ng-options="i.jt for i in jobTypes" required="required">
+							</select>
+							<span style="color: red" data-ng-show="empReg.jobType.$dirty && empReg.jobType.$invalid">
+						 		<span data-ng-show="empReg.jobType.$error.required">Job Type  is required</span>
+							</span>
+							</div>
+				</div>
+				<div>
+					<button type="button" class="btn btn-light" data-ng-click="addEmployee();">Add Employee</button>
+					<button type="reset" class="btn btn-light" >Reset</button>
+				</div>
+			</div>
+		</form>
+	</div>
+     </div>
+  </div>
+</div>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <p>Footer</p>
+</div>
+	<script src="../js/employeeRegistration.js"></script>
+</body>
+</html>

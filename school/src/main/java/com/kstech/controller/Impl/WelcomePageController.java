@@ -11,4 +11,9 @@ public class WelcomePageController {
 	public ModelAndView index() {
 		return new ModelAndView("view/index");
 	}
+	
+	@RequestMapping("/bootstrap")
+	public ModelAndView testBootStrap() {
+		return new ModelAndView("view/firstbootstrap");
+	}
 }

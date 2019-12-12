@@ -41,7 +41,8 @@ public class EmployeeControllerImpl {
 		return new ResponseEntity<EmployeeVO>(employee, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/employees/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/employees/{id}", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<EmployeeVO> getEmployeeById(@PathVariable("id") Long id) {
 		EmployeeVO employee = employeeLogic.getEmployeeById(id);
 
