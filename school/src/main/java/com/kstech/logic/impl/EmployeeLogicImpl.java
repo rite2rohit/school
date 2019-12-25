@@ -1,17 +1,13 @@
 package com.kstech.logic.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kstech.app.exception.RecordNotFoundException;
 import com.kstech.app.exception.SchoolBusinessException;
 import com.kstech.dao.AddressDAO;
 import com.kstech.dao.EmployeeDAO;
@@ -49,12 +45,8 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 
 	private Employee employeeFromDB(Long id) {
 		Optional<Employee> employeeOpt = employeeDao.findById(id);
-		Employee employee = null;
-		try {
-			employee = employeeOpt.get();
-		} catch (NoSuchElementException e) {
-			throw new SchoolBusinessException("emp.not.found", new String[] { id.toString() });
-		}
+		Employee employee = employeeOpt
+				.orElseThrow(() -> new SchoolBusinessException("emp.not.found", new String[] { id.toString() }));
 		return employee;
 	}
 
@@ -74,17 +66,17 @@ public class EmployeeLogicImpl implements EmployeeLogic {
 	}
 
 	@Override
-	public List<EmployeeVO> getEmployeeByName(String name) {
-		List<Employee> employees = employeeDao.getEmployeeByName(name);
-		if (employees.size() == 0) {
-			throw new RecordNotFoundException("No Employee found with name:- " + name);
+	public List<EmployeeVO> getEmployeeByName(String empName) {
+		List<Employee> employees = employeeDao.getEmployeeByName(empName);
+		if (employees.isEmpty()) {
+			throw new SchoolBusinessException("emp.not.found.with.name", new String[] { empName });
 		}
 		List<EmployeeVO> employeeVO = new ArrayList<>();
-		for (Employee emp : employees) {
+		employees.stream().forEach(emp -> {
 			EmployeeVO employee = new EmployeeVO();
 			BeanUtils.copyProperties(emp, employee);
 			employeeVO.add(employee);
-		}
+		});
 
 		return employeeVO;
 	}
